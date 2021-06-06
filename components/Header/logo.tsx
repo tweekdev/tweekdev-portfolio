@@ -45,7 +45,7 @@ export const Logo: React.FC<React.SVGAttributes<SVGSVGElement>> = (props) => {
                 }
 
                 .cls-6 {
-                    fill: #1d1e1c;
+                    fill: #dedede;
                 }
 
                 .d {

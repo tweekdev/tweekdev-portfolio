@@ -1,0 +1,47 @@
+overwrite: true
+schema: "http://localhost:4000/graphql"
+documents:
+    - "src/**/*.graphql"
+hooks:
+    afterOneFileWrite:
+        - prettier --write
+generates:
+    src/typings/generated.ts:
+        plugins:
+            - "typescript"
+        config:
+            scalars:
+                JSON: string
+                UUID: string
+                Datetime: any
+                Cursor: string
+    src/:
+        preset: near-operation-file
+        presetConfig:
+            extension: .generated.tsx
+            baseTypesPath: typings/generated.ts
+        plugins:
+            - add:
+                  content: "/* eslint-disable @typescript-eslint/explicit-function-return-type */"
+            - add:
+                  content: "/* eslint-disable @typescript-eslint/no-unused-vars */"
+            - add:
+                  content: "/* eslint-disable @typescript-eslint/ban-types */"
+            - add:
+                  content: "/* eslint-disable @typescript-eslint/ban-ts-comment */\n// @ts-ignore"
+            - "typescript-operations"
+            - "typescript-react-apollo"
+        config:
+            skipTypename: true
+            preResolveTypes: true
+            avoidOptionals: true
+            withComponent: false
+            withHOC: false
+            withHooks: true
+            gqlImport: "@apollo/client#gql"
+            withResultType: true
+            scalars:
+                JSON: string
+                UUID: string
+                Datetime: any
+                Cursor: string
